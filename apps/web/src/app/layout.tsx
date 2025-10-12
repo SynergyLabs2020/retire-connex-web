@@ -1,31 +1,29 @@
-import React from 'react';
+import { Geist, Geist_Mono } from 'next/font/google';
 
-import './globals.css';
+import { Providers } from '@/src/components/providers';
 
-import localFont from 'next/font/local';
+import '@workspace/ui/globals.css';
 
-interface ILayout {
-    children: React.ReactNode;
-}
-
-const futura = localFont({
-    src: [
-        { path: './fonts/FuturaCyrillicLight.woff', weight: '300', style: 'normal' },
-        { path: './fonts/FuturaCyrillicBook.woff', weight: '400', style: 'normal' },
-        { path: './fonts/FuturaCyrillicMedium.woff', weight: '500', style: 'normal' },
-        { path: './fonts/FuturaCyrillicDemi.woff', weight: '600', style: 'normal' },
-        { path: './fonts/FuturaCyrillicBold.woff', weight: '700', style: 'normal' },
-        { path: './fonts/FuturaCyrillicHeavy.woff', weight: '800', style: 'normal' },
-        { path: './fonts/FuturaCyrillicExtraBold.woff', weight: '900', style: 'normal' },
-    ],
-    variable: '--font-futura',
-    display: 'swap',
+const fontSans = Geist({
+    subsets: ['latin'],
+    variable: '--font-sans',
 });
 
-export default function MainLayout({ children }: ILayout) {
+const fontMono = Geist_Mono({
+    subsets: ['latin'],
+    variable: '--font-mono',
+});
+
+export default function RootLayout({
+    children,
+}: Readonly<{
+    children: React.ReactNode;
+}>) {
     return (
-        <html lang="en" className={`${futura.variable} antialiased`}>
-            <body className="font-sans">{children}</body>
+        <html lang="en" suppressHydrationWarning>
+            <body className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased `}>
+                <Providers>{children}</Providers>
+            </body>
         </html>
     );
 }
