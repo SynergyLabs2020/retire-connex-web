@@ -27,9 +27,10 @@ export default function LoginPage() {
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting },
+        formState: { errors, isSubmitting, isValid }, // 1. Destructure isValid from formState
     } = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema),
+        mode: 'onChange', // 2. Add mode: 'onChange' to validate on every input change
         defaultValues: {
             email: '',
             password: '',
@@ -44,10 +45,10 @@ export default function LoginPage() {
     return (
         <div>
             <div>
-                <h1 className="text-4xl font-bold px-3 text-foreground text-center">
+                <h1 className="text-3xl sm:text-4xl font-bold px-3 text-foreground text-center">
                     Log in to your account
                 </h1>
-                <p className="text-xl text-muted-foreground text-center mt-3">
+                <p className="text-lg sm:text-xl text-muted-foreground text-center mt-3">
                     Welcome back! Please enter your details.
                 </p>
             </div>
@@ -63,7 +64,9 @@ export default function LoginPage() {
                         autoComplete="new-password"
                         {...register('email')}
                     />
-                    {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
+                    {errors.email && (
+                        <p className="text-sm text-destructive">{errors.email.message}</p>
+                    )}
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="password" className="text-md font-medium">
@@ -90,7 +93,7 @@ export default function LoginPage() {
                         </button>
                     </div>
                     {errors.password && (
-                        <p className="text-sm text-red-500">{errors.password.message}</p>
+                        <p className="text-sm text-destructive">{errors.password.message}</p>
                     )}
                 </div>
                 <Link
@@ -103,11 +106,18 @@ export default function LoginPage() {
                     size="lg"
                     type="submit"
                     className="cursor-pointer w-full text-white font-semibold"
-                    disabled={isSubmitting}
+                    // 3. Update the disabled logic
+                    disabled={!isValid || isSubmitting}
                 >
                     {isSubmitting ? 'Signing In...' : 'Sign In'}
                 </Button>
             </form>
+            <p className="mt-4 flex gap-2 text-muted-foreground text-lg items-center justify-center">
+                Don’t have an account?
+                <Link href={'/signup'} className="text-destructive underline text-end font-bold">
+                    Sign up
+                </Link>
+            </p>
         </div>
     );
 }

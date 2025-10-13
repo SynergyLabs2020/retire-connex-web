@@ -8,7 +8,7 @@ interface LayoutProps {
 
 export default function AuthLayout({ children }: LayoutProps) {
     return (
-        <div className="flex flex-col items-center p-24 h-screen bg-auth-image">
+        <div className="flex flex-col items-center py-24 px-5 sm:p-24 h-screen bg-auth-image">
             <Image
                 src="/logo.svg"
                 alt="Connex Logo"
@@ -17,7 +17,7 @@ export default function AuthLayout({ children }: LayoutProps) {
                 priority
                 className="mb-6"
             />
-            <div>{children}</div>
+            <div className="w-full sm:w-auto">{children}</div>
         </div>
     );
 }
