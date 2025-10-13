@@ -17,7 +17,7 @@ export default function AuthLayout({ children }: LayoutProps) {
                 priority
                 className="mb-6"
             />
-            <div className="w-full sm:w-auto">{children}</div>
+            <div className="w-full sm:w-auto flex flex-col">{children}</div>
         </div>
     );
 }
