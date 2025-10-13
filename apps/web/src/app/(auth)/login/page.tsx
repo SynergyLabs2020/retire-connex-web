@@ -63,9 +63,7 @@ export default function LoginPage() {
                         autoComplete="new-password"
                         {...register('email')}
                     />
-                    {errors.email && (
-                        <p className="text-sm text-destructive">{errors.email.message}</p>
-                    )}
+                    {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="password" className="text-md font-medium">
@@ -92,7 +90,7 @@ export default function LoginPage() {
                         </button>
                     </div>
                     {errors.password && (
-                        <p className="text-sm text-destructive">{errors.password.message}</p>
+                        <p className="text-sm text-red-500">{errors.password.message}</p>
                     )}
                 </div>
                 <Link
