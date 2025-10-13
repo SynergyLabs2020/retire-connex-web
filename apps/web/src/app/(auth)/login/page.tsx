@@ -1,19 +1,45 @@
 'use client';
 
-import type React from 'react';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 import Link from 'next/link';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@workspace/ui/components/button';
 import { Input } from '@workspace/ui/components/input';
 import { Label } from '@workspace/ui/components/label';
+import { z } from 'zod';
 
 import Eye from '@/components/icons/Eye';
 import EyeOff from '@/components/icons/EyeOff';
 
+const loginSchema = z.object({
+    email: z.string().email({ message: 'Please enter a valid email address.' }),
+    password: z.string().min(8, { message: 'Password must be at least 8 characters long.' }),
+});
+
+type LoginFormData = z.infer<typeof loginSchema>;
+
 export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+    } = useForm<LoginFormData>({
+        resolver: zodResolver(loginSchema),
+        defaultValues: {
+            email: '',
+            password: '',
+        },
+    });
+
+    const onSubmit = (data: LoginFormData) => {
+        console.log('Form data submitted:', data);
+        return new Promise((resolve) => setTimeout(resolve, 2000));
+    };
 
     return (
         <div>
@@ -25,12 +51,21 @@ export default function LoginPage() {
                     Welcome back! Please enter your details.
                 </p>
             </div>
-            <form className="flex flex-col gap-5 mt-10">
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 mt-10">
                 <div className="space-y-2">
                     <Label htmlFor="email" className="text-md font-medium">
                         Email
                     </Label>
-                    <Input id="email" type="email" placeholder="Enter your email" required />
+                    <Input
+                        id="email"
+                        type="email"
+                        placeholder="Enter your email"
+                        autoComplete="new-password"
+                        {...register('email')}
+                    />
+                    {errors.email && (
+                        <p className="text-sm text-destructive">{errors.email.message}</p>
+                    )}
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="password" className="text-md font-medium">
@@ -41,7 +76,8 @@ export default function LoginPage() {
                             id="password"
                             type={showPassword ? 'text' : 'password'}
                             placeholder="Enter your password"
-                            required
+                            autoComplete="new-password"
+                            {...register('password')}
                         />
                         <button
                             type="button"
@@ -55,6 +91,9 @@ export default function LoginPage() {
                             )}
                         </button>
                     </div>
+                    {errors.password && (
+                        <p className="text-sm text-destructive">{errors.password.message}</p>
+                    )}
                 </div>
                 <Link
                     href="/password-recovery"
@@ -66,8 +105,9 @@ export default function LoginPage() {
                     size="lg"
                     type="submit"
                     className="cursor-pointer w-full text-white font-semibold"
+                    disabled={isSubmitting}
                 >
-                    Sign In
+                    {isSubmitting ? 'Signing In...' : 'Sign In'}
                 </Button>
             </form>
         </div>
