@@ -7,12 +7,13 @@ import Link from 'next/link';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@workspace/ui/components/button';
-import { Input } from '@workspace/ui/components/input';
-import { Label } from '@workspace/ui/components/label';
+import { FormInput } from '@workspace/ui/components/form.input';
 import { z } from 'zod';
 
+import AuthHeader from '@/components/AuthHeader';
 import Eye from '@/components/icons/Eye';
 import EyeOff from '@/components/icons/EyeOff';
+import OAuth from '@/components/OAuth';
 
 const loginSchema = z.object({
     email: z.string().email({ message: 'Please enter a valid email address.' }),
@@ -27,10 +28,10 @@ export default function LoginPage() {
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting, isValid }, // 1. Destructure isValid from formState
+        formState: { errors, isSubmitting, isValid },
     } = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema),
-        mode: 'onChange', // 2. Add mode: 'onChange' to validate on every input change
+        mode: 'onChange',
         defaultValues: {
             email: '',
             password: '',
@@ -44,58 +45,35 @@ export default function LoginPage() {
 
     return (
         <div>
-            <div>
-                <h1 className="text-3xl sm:text-4xl font-bold px-3 text-foreground text-center">
-                    Log in to your account
-                </h1>
-                <p className="text-lg sm:text-xl text-muted-foreground text-center mt-3">
-                    Welcome back! Please enter your details.
-                </p>
-            </div>
+            <AuthHeader
+                heading="Log in to your account"
+                description="Welcome back! Please enter your details."
+            />
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 mt-10">
-                <div className="space-y-2">
-                    <Label htmlFor="email" className="text-md font-medium">
-                        Email
-                    </Label>
-                    <Input
-                        id="email"
-                        type="email"
-                        placeholder="Enter your email"
-                        autoComplete="new-password"
-                        {...register('email')}
-                    />
-                    {errors.email && (
-                        <p className="text-sm text-destructive">{errors.email.message}</p>
-                    )}
-                </div>
-                <div className="space-y-2">
-                    <Label htmlFor="password" className="text-md font-medium">
-                        Password
-                    </Label>
-                    <div className="relative">
-                        <Input
-                            id="password"
-                            type={showPassword ? 'text' : 'password'}
-                            placeholder="Enter your password"
-                            autoComplete="new-password"
-                            {...register('password')}
-                        />
-                        <button
-                            type="button"
-                            onClick={() => setShowPassword(!showPassword)}
-                            className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                        >
-                            {showPassword ? (
-                                <EyeOff className="h-4 w-4" />
-                            ) : (
-                                <Eye className="h-4 w-4" />
-                            )}
-                        </button>
-                    </div>
-                    {errors.password && (
-                        <p className="text-sm text-destructive">{errors.password.message}</p>
-                    )}
-                </div>
+                <FormInput
+                    type="email"
+                    label="Email"
+                    placeholder="Enter your email"
+                    register={register('email')}
+                />
+                <FormInput
+                    type={showPassword ? 'text' : 'password'}
+                    label="Password"
+                    placeholder="Enter your password"
+                    register={register('password')}
+                >
+                    <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                        {showPassword ? (
+                            <EyeOff className="h-4 w-4" />
+                        ) : (
+                            <Eye className="h-4 w-4" />
+                        )}
+                    </button>
+                </FormInput>
                 <Link
                     href="/password-recovery"
                     className="text-destructive underline text-end font-bold"
@@ -106,18 +84,18 @@ export default function LoginPage() {
                     size="lg"
                     type="submit"
                     className="cursor-pointer w-full text-white font-semibold"
-                    // 3. Update the disabled logic
                     disabled={!isValid || isSubmitting}
                 >
                     {isSubmitting ? 'Signing In...' : 'Sign In'}
                 </Button>
             </form>
-            <p className="mt-4 flex gap-2 text-muted-foreground text-lg items-center justify-center">
+            {/* <p className="mt-4 flex gap-2 text-muted-foreground text-lg items-center justify-center">
                 Don’t have an account?
                 <Link href={'/signup'} className="text-destructive underline text-end font-bold">
                     Sign up
                 </Link>
-            </p>
+            </p> */}
+            <OAuth />
         </div>
     );
 }
