@@ -57,12 +57,9 @@ export default function PasswordRecoveryPage() {
                 </Link>
                 <p className="flex gap-2 text-muted-foreground text-lg items-center justify-center">
                     Didn’t receive the email?
-                    <Link
-                        href={'/signup'}
-                        className="text-destructive underline text-end font-bold"
-                    >
+                    <button className="text-destructive underline text-end font-bold cursor-pointer">
                         Click to resend
-                    </Link>
+                    </button>
                 </p>
             </div>
         );
