@@ -1,9 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-
-import Link from 'next/link';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@workspace/ui/components/button';
@@ -19,8 +17,6 @@ const recoverySchema = z.object({
 type LoginFormData = z.infer<typeof recoverySchema>;
 
 export default function PasswordRecoveryPage() {
-    const [isSent, setIsSent] = useState(true);
-
     const {
         register,
         handleSubmit,
@@ -36,34 +32,7 @@ export default function PasswordRecoveryPage() {
     const onSubmit = async (data: LoginFormData) => {
         console.log('Form data submitted:', data);
         await new Promise((resolve) => setTimeout(resolve, 2000));
-        setIsSent(true);
     };
-
-    if (isSent) {
-        return (
-            <div>
-                <AuthHeader
-                    heading="Verify your email"
-                    description="We’ve sent a verification link to your@email.com. Please check your inbox and click the link to confirm your account."
-                />
-                <Link href={'https://gmail.com'} target="_blank">
-                    <Button
-                        size="lg"
-                        type="submit"
-                        className="my-8 cursor-pointer w-full text-white font-semibold"
-                    >
-                        Open Email App
-                    </Button>
-                </Link>
-                <p className="flex gap-2 text-muted-foreground text-lg items-center justify-center">
-                    Didn’t receive the email?
-                    <button className="text-destructive underline text-end font-bold cursor-pointer">
-                        Click to resend
-                    </button>
-                </p>
-            </div>
-        );
-    }
 
     return (
         <div>
@@ -71,22 +40,27 @@ export default function PasswordRecoveryPage() {
                 heading="Forgot password?"
                 description="Pop in your email, and we’ll send you a reset link faster than you can say “password recovery”!"
             />
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 mt-10 w-full">
-                <FormInput
-                    type="email"
-                    label="Email"
-                    placeholder="Enter your email"
-                    register={register('email')}
-                />
-                <Button
-                    size="lg"
-                    type="submit"
-                    className="mt-3 cursor-pointer w-full text-white font-semibold"
-                    disabled={!isValid || isSubmitting}
+            <div className="w-full max-w-[400px]">
+                <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="flex flex-col gap-5 mt-10 w-full"
                 >
-                    {isSubmitting ? 'Sending Link...' : 'Send Link'}
-                </Button>
-            </form>
+                    <FormInput
+                        type="email"
+                        label="Email"
+                        placeholder="Enter your email"
+                        register={register('email')}
+                    />
+                    <Button
+                        size="lg"
+                        type="submit"
+                        className="mt-3 cursor-pointer w-full text-white font-semibold"
+                        disabled={!isValid || isSubmitting}
+                    >
+                        {isSubmitting ? 'Sending Link...' : 'Send Link'}
+                    </Button>
+                </form>
+            </div>
         </div>
     );
 }

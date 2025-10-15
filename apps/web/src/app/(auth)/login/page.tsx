@@ -49,53 +49,58 @@ export default function LoginPage() {
                 heading="Log in to your account"
                 description="Welcome back! Please enter your details."
             />
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 mt-10">
-                <FormInput
-                    type="email"
-                    label="Email"
-                    placeholder="Enter your email"
-                    register={register('email')}
-                />
-                <FormInput
-                    type={showPassword ? 'text' : 'password'}
-                    label="Password"
-                    placeholder="Enter your password"
-                    register={register('password')}
-                >
-                    <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+            <div className="w-full max-w-[400px]">
+                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 mt-10">
+                    <FormInput
+                        type="email"
+                        label="Email"
+                        placeholder="Enter your email"
+                        register={register('email')}
+                    />
+                    <FormInput
+                        type={showPassword ? 'text' : 'password'}
+                        label="Password"
+                        placeholder="Enter your password"
+                        register={register('password')}
                     >
-                        {showPassword ? (
-                            <EyeOff className="h-4 w-4" />
-                        ) : (
-                            <Eye className="h-4 w-4" />
-                        )}
-                    </button>
-                </FormInput>
-                <Link
-                    href="/password-recovery"
-                    className="text-destructive underline text-end font-bold"
-                >
-                    Forgot your password?
-                </Link>
-                <Button
-                    size="lg"
-                    type="submit"
-                    className="cursor-pointer w-full text-white font-semibold"
-                    disabled={!isValid || isSubmitting}
-                >
-                    {isSubmitting ? 'Signing In...' : 'Sign In'}
-                </Button>
-            </form>
-            {/* <p className="mt-4 flex gap-2 text-muted-foreground text-lg items-center justify-center">
-                Don’t have an account?
-                <Link href={'/signup'} className="text-destructive underline text-end font-bold">
-                    Sign up
-                </Link>
-            </p> */}
-            <OAuth />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                        >
+                            {showPassword ? (
+                                <EyeOff className="h-4 w-4" />
+                            ) : (
+                                <Eye className="h-4 w-4" />
+                            )}
+                        </button>
+                    </FormInput>
+                    <Link
+                        href="/password-recovery"
+                        className="text-destructive underline text-end font-bold"
+                    >
+                        Forgot your password?
+                    </Link>
+                    <Button
+                        size="lg"
+                        type="submit"
+                        className="cursor-pointer w-full text-white font-semibold"
+                        disabled={!isValid || isSubmitting}
+                    >
+                        {isSubmitting ? 'Signing In...' : 'Sign In'}
+                    </Button>
+                </form>
+                <p className="mt-4 flex gap-2 text-muted-foreground text-lg items-center justify-center">
+                    Don’t have an account?
+                    <Link
+                        href={'/signup'}
+                        className="text-destructive underline text-end font-bold"
+                    >
+                        Sign up
+                    </Link>
+                </p>
+                <OAuth type="login" />
+            </div>
         </div>
     );
 }

@@ -1,19 +1,36 @@
 import React from 'react';
 
 import { Label } from '@radix-ui/react-label';
-
-// @ts-ignore
-import { Input } from './input';
+import { Input } from '@workspace/ui/components/input';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@workspace/ui/components/select';
 
 interface FormInputProps {
     children?: React.ReactNode;
     label?: string;
     placeholder?: string;
     type: string;
-    register: any;
+    register?: any;
+    readonly?: boolean;
 }
 
-function FormInput({ children, label, placeholder, type, register }: FormInputProps) {
+function FormInput({ children, label, placeholder, type, register, readonly }: FormInputProps) {
+    if (type === 'drill') {
+        return (
+            <div className="space-y-2">
+                <Label htmlFor={label} className="text-md font-medium">
+                    {label}
+                </Label>
+                <div className="relative">{children}</div>
+            </div>
+        );
+    }
+
     if (type === 'checkbox-agreement') {
         return (
             <div className="space-y-2">
@@ -24,7 +41,10 @@ function FormInput({ children, label, placeholder, type, register }: FormInputPr
                         className="checkbox-round"
                         {...register}
                     />
-                    <Label htmlFor="checkbox-input" className="text-md font-medium">
+                    <Label
+                        htmlFor="checkbox-input"
+                        className="text-md font-medium text-muted-foreground"
+                    >
                         I agree with the{' '}
                         <a href="" className="text-destructive">
                             Privacy Policy
@@ -47,6 +67,7 @@ function FormInput({ children, label, placeholder, type, register }: FormInputPr
             <div className="relative">
                 <Input
                     id={label}
+                    readOnly={readonly}
                     type={type}
                     placeholder={placeholder}
                     autoComplete="new-password"

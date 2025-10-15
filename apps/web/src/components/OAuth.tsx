@@ -5,7 +5,11 @@ import { Button } from '@workspace/ui/components/button';
 import Apple from './icons/Apple';
 import Google from './icons/Google';
 
-export default function OAuth() {
+interface OAuthProps {
+    type: 'signup' | 'login';
+}
+
+export default function OAuth({ type }: OAuthProps) {
     return (
         <div>
             <div className="my-10 flex gap-2 items-center justify-between">
@@ -16,11 +20,11 @@ export default function OAuth() {
             <div className="flex flex-col gap-2">
                 <Button size="xl" className="bg-accent text-black">
                     <Google className="!w-6 !h-6" />
-                    Sign in with Google
+                    {type === 'signup' ? 'Sign up with Google' : 'Sign in with Google'}
                 </Button>
                 <Button size="xl" className="bg-black text-white">
                     <Apple className="!w-6 !h-6 fill-white" />
-                    Sign in with Apple
+                    {type === 'signup' ? 'Sign up with Apple' : 'Sign in with Apple'}
                 </Button>
             </div>
         </div>
