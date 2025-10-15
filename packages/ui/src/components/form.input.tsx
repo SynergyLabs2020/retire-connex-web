@@ -2,13 +2,6 @@ import React from 'react';
 
 import { Label } from '@radix-ui/react-label';
 import { Input } from '@workspace/ui/components/input';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@workspace/ui/components/select';
 
 interface FormInputProps {
     children?: React.ReactNode;
@@ -16,14 +9,23 @@ interface FormInputProps {
     placeholder?: string;
     type: string;
     register?: any;
+    value?: string;
     readonly?: boolean;
 }
 
-function FormInput({ children, label, placeholder, type, register, readonly }: FormInputProps) {
+function FormInput({
+    children,
+    label,
+    placeholder,
+    type,
+    register,
+    readonly,
+    value,
+}: FormInputProps) {
     if (type === 'drill') {
         return (
             <div className="space-y-2">
-                <Label htmlFor={label} className="text-md font-medium">
+                <Label htmlFor={label} className="text-md font-medium text-left">
                     {label}
                 </Label>
                 <div className="relative">{children}</div>
@@ -60,15 +62,16 @@ function FormInput({ children, label, placeholder, type, register, readonly }: F
     }
 
     return (
-        <div className="space-y-2">
+        <div className="flex flex-col gap-2 items-start">
             <Label htmlFor={label} className="text-md font-medium">
                 {label}
             </Label>
-            <div className="relative">
+            <div className="relative w-full">
                 <Input
                     id={label}
                     readOnly={readonly}
                     type={type}
+                    value={value}
                     placeholder={placeholder}
                     autoComplete="new-password"
                     {...register}
