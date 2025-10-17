@@ -12,11 +12,11 @@ import { FormInput } from '@workspace/ui/components/form.input';
 import z from 'zod';
 
 import AuthHeader from '@/components/AuthHeader';
-import ChooseConsumerSkillsDialog from '@/components/dialogs/ChooseConsumerSkillsDialog';
+import ChooseConsumerDetailsDialog from '@/components/dialogs/ChooseConsumerDetailsDialog';
 import Add from '@/components/icons/Add';
 import ArrowDown from '@/components/icons/ArrowDown';
 import ArrowLeft from '@/components/icons/ArrowLeft';
-import { handleImageUpload } from '@/utils/firbase.upload';
+import { handleMultipleImageUpload } from '@/utils/firbase.upload';
 import { consumerHobbiesStatic, consumerSkillsStatic } from '@/utils/static.data';
 
 const skillsSchema = z.object({
@@ -32,7 +32,7 @@ export default function SkillsPage() {
     const [update, setUpdate] = useState(0);
     const [isUploading, setIsUploading] = useState(false);
     const [hobbies, setHobbies] = useState(consumerHobbiesStatic);
-    const [skills, setSkills] = useState(consumerHobbiesStatic);
+    const [skills, setSkills] = useState(consumerSkillsStatic);
 
     const {
         register,
@@ -72,7 +72,7 @@ export default function SkillsPage() {
                     onSubmit={handleSubmit(onSubmit)}
                     className="flex flex-col gap-5 mt-10 w-full"
                 >
-                    <ChooseConsumerSkillsDialog
+                    <ChooseConsumerDetailsDialog
                         title="Hobbies & Interests"
                         update={update}
                         data={hobbies}
@@ -95,8 +95,8 @@ export default function SkillsPage() {
                                 </div>
                             </FormInput>
                         </div>
-                    </ChooseConsumerSkillsDialog>
-                    <ChooseConsumerSkillsDialog
+                    </ChooseConsumerDetailsDialog>
+                    <ChooseConsumerDetailsDialog
                         title="Professional Experience & Skills"
                         update={update}
                         data={skills}
@@ -119,7 +119,7 @@ export default function SkillsPage() {
                                 </div>
                             </FormInput>
                         </div>
-                    </ChooseConsumerSkillsDialog>
+                    </ChooseConsumerDetailsDialog>
                     <FormInput
                         type="number"
                         label="Years of Professional Experience (optional)"
@@ -156,7 +156,7 @@ export default function SkillsPage() {
                                     multiple
                                     accept="image/png, image/jpeg, application/pdf"
                                     onChange={(event) =>
-                                        handleImageUpload(
+                                        handleMultipleImageUpload(
                                             event,
                                             setIsUploading,
                                             setValue,

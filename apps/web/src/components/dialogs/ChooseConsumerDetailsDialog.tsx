@@ -22,13 +22,13 @@ interface DialogProps {
     update: number;
     data: string[];
     objectKey: string;
-    set: (val: any) => any;
+    set?: (val: any) => any;
     setValue: (key: any, val: any, opts: any) => void;
     getValues: (key: any) => any;
     setUpdate: (val: any) => any;
 }
 
-export default function ChooseConsumerSkillsDialog({
+export default function ChooseConsumerDetailsDialog({
     children,
     title,
     update,
@@ -55,7 +55,7 @@ export default function ChooseConsumerSkillsDialog({
     };
 
     const prependValue = (value: string) => {
-        set([value, ...data]);
+        set!([value, ...data]);
         addValue(value);
     };
 
@@ -70,18 +70,22 @@ export default function ChooseConsumerSkillsDialog({
                 <DialogHeader>
                     <DialogTitle>{title}</DialogTitle>
                     <div className="flex flex-col gap-4 mt-5 mb-5 max-h-[350px] overflow-y-scroll">
-                        <ConsumerAddSkillsDialog title="" addValue={prependValue}>
-                            <div
-                                className={cn(
-                                    'inline-flex items-center cursor-pointer justify-center whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
-                                    'h-12 px-6 py-6 text-lg gap-1',
-                                    'bg-accent w-full text-destructive font-semibold'
-                                )}
-                            >
-                                <Add className="w-5 h-5" />
-                                Add
-                            </div>
-                        </ConsumerAddSkillsDialog>
+                        {set ? (
+                            <ConsumerAddSkillsDialog title="" addValue={prependValue}>
+                                <div
+                                    className={cn(
+                                        'inline-flex items-center cursor-pointer justify-center whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
+                                        'h-12 px-6 py-6 text-lg gap-1',
+                                        'bg-accent w-full text-destructive font-semibold'
+                                    )}
+                                >
+                                    <Add className="w-5 h-5" />
+                                    Add
+                                </div>
+                            </ConsumerAddSkillsDialog>
+                        ) : (
+                            <></>
+                        )}
                         {data.map((item: string) => (
                             <Button
                                 size="xl"
