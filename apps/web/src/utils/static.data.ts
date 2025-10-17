@@ -33,7 +33,7 @@ export const notificationTypes = [
     },
 ];
 
-export const notifyTypes = [
+export const notifyAbout = [
     'New Opportunities',
     'Messages',
     'Application Updates',

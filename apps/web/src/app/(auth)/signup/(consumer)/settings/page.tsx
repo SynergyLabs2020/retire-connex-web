@@ -18,7 +18,7 @@ import ArrowDown from '@/components/icons/ArrowDown';
 import ArrowLeft from '@/components/icons/ArrowLeft';
 import Profile from '@/components/icons/Profile';
 import { handleSingleImageUpload } from '@/utils/firbase.upload';
-import { notificationTypes, notifyTypes } from '@/utils/static.data';
+import { notificationTypes, notifyAbout } from '@/utils/static.data';
 
 const settingsSchema = z.object({
     photoUrl: z.string(),
@@ -147,7 +147,7 @@ export default function SettingsPage() {
                     <ChooseConsumerDetailsDialog
                         title="Notification Types"
                         update={update}
-                        data={notifyTypes}
+                        data={notifyAbout}
                         objectKey="notifyAbout"
                         setValue={setValue}
                         getValues={getValues}
