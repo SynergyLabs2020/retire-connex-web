@@ -37,7 +37,7 @@ export default function AvailabilityPage() {
         register,
         handleSubmit,
         control,
-        formState: { isSubmitting, isValid, errors },
+        formState: { isSubmitting, isValid },
         getValues,
         setValue,
     } = useForm<AvailabilityFormData>({
@@ -115,13 +115,7 @@ export default function AvailabilityPage() {
                         getValues={getValues}
                         setUpdate={setUpdate}
                     >
-                        <div
-                            className="cursor-pointer"
-                            onClick={() => {
-                                setUpdate((ev) => ev + 1);
-                                console.log(errors);
-                            }}
-                        >
+                        <div className="cursor-pointer" onClick={() => setUpdate((ev) => ev + 1)}>
                             <FormInput
                                 readonly={true}
                                 type="text"
@@ -156,7 +150,7 @@ export default function AvailabilityPage() {
                                     className="mt-4"
                                     color="destructive"
                                     defaultValue={[getValues('workRadius')]}
-                                    max={70}
+                                    max={50}
                                     step={1}
                                 />
                             </FormInput>
