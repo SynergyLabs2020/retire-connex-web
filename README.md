@@ -3,7 +3,6 @@
 This template is for creating a monorepo with shadcn/ui.
 
 ## Usage
-
 ```bash
 pnpm dlx shadcn@latest init
 ```
