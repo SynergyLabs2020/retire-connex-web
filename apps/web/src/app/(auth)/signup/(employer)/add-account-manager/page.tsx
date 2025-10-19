@@ -16,17 +16,22 @@ import ArrowDown from '@/components/icons/ArrowDown';
 import ArrowLeft from '@/components/icons/ArrowLeft';
 import { organiztaionManagerPositions } from '@/utils/static.data';
 
-const companyBasicsSchema = z.object({
+const addOrganizationManagerSchema = z.object({
     organizationManagerName: z
         .string()
-        .min(2, { message: 'First name must be at least 2 characters.' }),
-    organizationManagerEmail: z.string().email({ message: 'Please enter a valid email address.' }),
+        .min(1, { message: "Manager's name is required." })
+        .min(2, { message: 'Name must be at least 2 characters.' }),
+    organizationManagerEmail: z
+        .string()
+        .min(1, { message: 'Email is required.' })
+        .email({ message: 'Please enter a valid email address.' }),
     organizationManagerPosition: z
         .string()
-        .min(2, { message: 'Last name must be at least 2 characters.' }),
+        .min(1, { message: "Manager's position is required." })
+        .min(2, { message: 'Position must be at least 2 characters.' }),
 });
 
-type ProfileFormData = z.infer<typeof companyBasicsSchema>;
+type AddOrganizationManagerFormData = z.infer<typeof addOrganizationManagerSchema>;
 
 export default function AddAccountPage() {
     const [update, setUpdate] = useState(0);
@@ -38,8 +43,8 @@ export default function AddAccountPage() {
         formState: { isSubmitting, isValid },
         setValue,
         getValues,
-    } = useForm<ProfileFormData>({
-        resolver: zodResolver(companyBasicsSchema),
+    } = useForm<AddOrganizationManagerFormData>({
+        resolver: zodResolver(addOrganizationManagerSchema),
         mode: 'onChange',
         defaultValues: {
             organizationManagerName: '',
@@ -48,7 +53,7 @@ export default function AddAccountPage() {
         },
     });
 
-    const onSubmit = (data: ProfileFormData, err: any) => {
+    const onSubmit = (data: AddOrganizationManagerFormData, err: any) => {
         console.log('Form data submitted:', data);
         return new Promise((resolve) => setTimeout(resolve, 2000));
     };

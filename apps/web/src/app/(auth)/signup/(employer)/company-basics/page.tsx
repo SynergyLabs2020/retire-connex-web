@@ -19,16 +19,24 @@ import ArrowLeft from '@/components/icons/ArrowLeft';
 import { organiztaionIndustires } from '@/utils/static.data';
 
 const companyBasicsSchema = z.object({
-    organizationName: z.string().min(2, { message: 'First name must be at least 2 characters.' }),
-    industry: z.string().min(2, { message: 'Last name must be at least 2 characters.' }),
+    organizationName: z
+        .string()
+        .min(1, { message: 'Organization name is required.' })
+        .min(2, { message: 'Organization name must be at least 2 characters.' }),
+    industry: z
+        .string()
+        .min(1, { message: 'Industry is required.' })
+        .min(2, { message: 'Industry must be at least 2 characters.' }),
     phoneNumber: z
         .string()
         .length(12, { message: 'Please enter a complete 11-digit phone number.' })
         .startsWith('+1'),
     location: z.string().min(1, { message: 'Location is required.' }),
-    organizationEmail: z.string().email({ message: 'Please enter a valid email address.' }),
+    organizationEmail: z
+        .string()
+        .min(1, { message: 'Email is required.' })
+        .email({ message: 'Please enter a valid email address.' }),
 });
-
 type ProfileFormData = z.infer<typeof companyBasicsSchema>;
 
 export default function CompanyBasicsPage() {

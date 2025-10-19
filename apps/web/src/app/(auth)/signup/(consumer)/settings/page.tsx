@@ -21,9 +21,13 @@ import { handleSingleImageUpload } from '@/utils/firbase.upload';
 import { notificationTypes, notifyAbout } from '@/utils/static.data';
 
 const settingsSchema = z.object({
-    photoUrl: z.string(),
-    notificationTypes: z.array(z.string()).min(1),
-    notifyAbout: z.array(z.string()).min(1),
+    photoUrl: z.string().url({ message: 'Please enter a valid URL.' }),
+    notificationTypes: z
+        .array(z.string())
+        .min(1, { message: 'Please select at least one notification type.' }),
+    notifyAbout: z
+        .array(z.string())
+        .min(1, { message: 'Please select at least one option to be notified about.' }),
 });
 
 type SettingsFormData = z.infer<typeof settingsSchema>;
@@ -115,12 +119,7 @@ export default function SettingsPage() {
                                 className="hidden"
                                 accept="image/png, image/jpeg"
                                 onChange={(event) =>
-                                    handleSingleImageUpload(
-                                        event,
-                                        setIsUploading,
-                                        setValue,
-                                        getValues
-                                    )
+                                    handleSingleImageUpload(event, setIsUploading, setValue)
                                 }
                                 disabled={isUploading}
                             />

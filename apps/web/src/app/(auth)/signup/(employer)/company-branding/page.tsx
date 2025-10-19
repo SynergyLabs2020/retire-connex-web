@@ -16,28 +16,26 @@ import ArrowLeft from '@/components/icons/ArrowLeft';
 import Building from '@/components/icons/Building';
 import { handleSingleImageUpload } from '@/utils/firbase.upload';
 
-const companyBasicsSchema = z.object({
+const companyBrandingSchema = z.object({
     photoUrl: z.string().min(2, { message: 'First name must be at least 2 characters.' }),
     organizationDescription: z
         .string()
         .min(2, { message: 'Last name must be at least 2 characters.' }),
 });
 
-type ProfileFormData = z.infer<typeof companyBasicsSchema>;
+type CompanyBrandingFormData = z.infer<typeof companyBrandingSchema>;
 
 export default function AddAccountPage() {
-    const [update, setUpdate] = useState(0);
     const [isUploading, setIsUploading] = useState(false);
 
     const {
         register,
         handleSubmit,
-        control,
         formState: { isSubmitting, isValid },
         setValue,
         getValues,
-    } = useForm<ProfileFormData>({
-        resolver: zodResolver(companyBasicsSchema),
+    } = useForm<CompanyBrandingFormData>({
+        resolver: zodResolver(companyBrandingSchema),
         mode: 'onChange',
         defaultValues: {
             photoUrl: '',
@@ -45,7 +43,7 @@ export default function AddAccountPage() {
         },
     });
 
-    const onSubmit = (data: ProfileFormData, err: any) => {
+    const onSubmit = (data: CompanyBrandingFormData) => {
         console.log('Form data submitted:', data);
         return new Promise((resolve) => setTimeout(resolve, 2000));
     };

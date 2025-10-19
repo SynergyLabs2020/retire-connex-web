@@ -18,14 +18,25 @@ import ArrowLeft from '@/components/icons/ArrowLeft';
 
 const availabilitySchema = z
     .object({
-        workRadius: z.coerce.number().min(1),
+        workRadius: z.coerce
+            .number({ invalid_type_error: 'Work radius must be a number.' })
+            .min(1, { message: 'Work radius must be at least 1.' }),
+
         isPaid: z.boolean(),
+
         isVolunteer: z.boolean(),
-        workPeriod: z.enum(['weekly', 'monthly']),
-        workHours: z.coerce.number().min(1),
+
+        workPeriod: z.enum(['weekly', 'monthly'], {
+            errorMap: () => ({ message: 'Please select a work period.' }),
+        }),
+
+        workHours: z.coerce
+            .number({ invalid_type_error: 'Work hours must be a number.' })
+            .min(1, { message: 'Work hours must be at least 1.' }),
     })
-    .refine((data) => data.isVolunteer || data.isPaid, {
-        message: 'You must select at least one notification method.',
+    .refine((data) => data.isPaid || data.isVolunteer, {
+        message: 'You must select at least one work type (Paid or Volunteer).',
+        path: ['isPaid'],
     });
 
 type AvailabilityFormData = z.infer<typeof availabilitySchema>;

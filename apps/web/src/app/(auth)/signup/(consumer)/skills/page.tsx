@@ -20,10 +20,19 @@ import { handleMultipleImageUpload } from '@/utils/firbase.upload';
 import { consumerHobbiesStatic, consumerSkillsStatic } from '@/utils/static.data';
 
 const skillsSchema = z.object({
-    skills: z.array(z.string()).min(1),
-    hobbies: z.array(z.string()).min(1),
-    images: z.array(z.string()).min(1),
-    experience: z.coerce.number().min(1).optional(),
+    skills: z.array(z.string()).min(1, {
+        message: 'Please add at least one skill.',
+    }),
+    hobbies: z.array(z.string()).min(1, {
+        message: 'Please add at least one hobby.',
+    }),
+    images: z.array(z.string().url({ message: 'Each image must be a valid URL.' })).min(1, {
+        message: 'Please upload at least one image.',
+    }),
+    experience: z.coerce
+        .number({ invalid_type_error: 'Experience must be a number.' })
+        .min(1, { message: 'Experience must be at least 1 year.' })
+        .optional(),
 });
 
 type SkillsFormData = z.infer<typeof skillsSchema>;
