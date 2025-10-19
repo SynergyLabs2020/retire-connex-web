@@ -22,7 +22,7 @@ export default function AuthHeader({ heading, description, step }: AuthHeaderPro
                     <Image
                         src={`/${step}.png`}
                         alt="Connex Logo"
-                        width={500}
+                        width={step > 4 ? 350 : 500}
                         height={100}
                         priority
                         className="mb-6"

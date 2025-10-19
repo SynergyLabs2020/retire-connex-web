@@ -52,8 +52,7 @@ export const handleMultipleImageUpload = async (
 export const handleSingleImageUpload = async (
     event: React.ChangeEvent<HTMLInputElement>,
     setIsUploading: Function,
-    setValue: Function,
-    getValues: Function
+    setValue: Function
 ) => {
     const file = event.target.files?.[0];
     if (!file) return;

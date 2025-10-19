@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Label } from '@radix-ui/react-label';
 import { Input } from '@workspace/ui/components/input';
+import { Textarea } from '@workspace/ui/components/textarea';
 
 interface FormInputProps {
     children?: React.ReactNode;
@@ -22,6 +23,23 @@ function FormInput({
     readonly,
     value,
 }: FormInputProps) {
+    if (type === 'textarea') {
+        return (
+            <div className="space-y-2">
+                <Label htmlFor={label} className="text-md font-medium text-left">
+                    {label}
+                </Label>
+                <div>
+                    <Textarea
+                        placeholder={placeholder}
+                        className="!bg-accent mt-2 min-h-[120px] max-h-[200px]"
+                        {...register}
+                    />
+                </div>
+            </div>
+        );
+    }
+
     if (type === 'drill') {
         return (
             <div className="space-y-2">

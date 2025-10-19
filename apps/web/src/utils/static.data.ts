@@ -39,3 +39,29 @@ export const notifyAbout = [
     'Application Updates',
     'Reviews & Feedback',
 ];
+
+export const organiztaionIndustires = [
+    'Non-profit',
+    'Healthcare',
+    'Education',
+    'Government',
+    'Community Services',
+    'Social Services',
+    'Senior Services',
+    'Environmental',
+    'Arts & Culture',
+    'Faith-based / Religious Organization',
+];
+
+export const organiztaionManagerPositions = [
+    'Volunteer Coordinator',
+    'HR Manager',
+    'Program Manager',
+    'Community Outreach Coordinator',
+    'Hiring Manager',
+    'Recruiter',
+    'Operations Manager',
+    'Administrator',
+    'Director of Programs',
+    'Executive Director',
+];

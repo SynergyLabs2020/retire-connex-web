@@ -107,7 +107,7 @@ export default function ProfileDetailsPage() {
                                     unmask={true}
                                     value={field.value}
                                     onAccept={(value) => field.onChange('+' + value)}
-                                    placeholder="Enter your phone number"
+                                    placeholder="Enter your phone number (U.S. only)"
                                     className={cn(
                                         'bg-accent file:text-foreground placeholder:text-muted-foreground border-input w-full min-w-0 rounded-2xl border px-3 py-3 text-base shadow-xs transition-[color,box-shadow] outline-none',
                                         'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]'
