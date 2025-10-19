@@ -1,15 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { IMaskInput } from 'react-imask';
+import { useForm } from 'react-hook-form';
 
 import Link from 'next/link';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@workspace/ui/components/button';
 import { FormInput } from '@workspace/ui/components/form.input';
-import { cn } from '@workspace/ui/lib/utils';
 import { z } from 'zod';
 
 import AuthHeader from '@/components/AuthHeader';

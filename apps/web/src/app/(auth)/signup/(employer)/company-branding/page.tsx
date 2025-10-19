@@ -1,8 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { IMaskInput } from 'react-imask';
+import { useForm } from 'react-hook-form';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -10,16 +9,12 @@ import Link from 'next/link';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@workspace/ui/components/button';
 import { FormInput } from '@workspace/ui/components/form.input';
-import { cn } from '@workspace/ui/lib/utils';
 import { z } from 'zod';
 
 import AuthHeader from '@/components/AuthHeader';
-import ChooseEmployerIndustryDialog from '@/components/dialogs/ChooseEmployerIndustryDialog';
-import ArrowDown from '@/components/icons/ArrowDown';
 import ArrowLeft from '@/components/icons/ArrowLeft';
 import Building from '@/components/icons/Building';
 import { handleSingleImageUpload } from '@/utils/firbase.upload';
-import { organiztaionManagerPositions } from '@/utils/static.data';
 
 const companyBasicsSchema = z.object({
     photoUrl: z.string().min(2, { message: 'First name must be at least 2 characters.' }),

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Button } from '@workspace/ui/components/button';
 
 import Apple from './icons/Apple';
